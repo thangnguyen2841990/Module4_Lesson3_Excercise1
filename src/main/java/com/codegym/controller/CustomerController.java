@@ -1,6 +1,7 @@
 package com.codegym.controller;
 
 import com.codegym.model.Customer;
+import com.codegym.service.CustomerService;
 import com.codegym.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +19,8 @@ import java.util.List;
 public class CustomerController {
 
 
-   @Autowired
-   private ICustomerService customerService;
+
+   private final ICustomerService customerService = new CustomerService();
 
 
 
@@ -64,7 +65,7 @@ public class CustomerController {
         return modelAndView;
     }
     @PostMapping("/edit/{id}")
-    private ModelAndView EditCustomer(int id, String name, String email, String address){
+    private ModelAndView EditCustomer(@PathVariable int id, String name, String email, String address){
         Customer customer = new Customer(id,name,email,address);
         this.customerService.updateById(id,customer);
         ModelAndView modelAndView = new ModelAndView("redirect:/customers");
